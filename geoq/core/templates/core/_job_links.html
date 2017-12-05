@@ -1,4 +1,5 @@
 {% load staticfiles %}
+        {% load settings_variables %}
 {% if object.required_courses.all %}
 <tr><td colspan="2" style="padding-top:20px;">
     {% for course in object.required_courses.all %}
@@ -6,18 +7,27 @@
     {% endfor %}
 </td></tr>
 {% endif %}
-<tr><td colspan="1" style="padding-top:20px;">
-    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#save_changes_modal">
+<tr>
+    <td colspan="1" style="padding-top:20px;">
+    <button type="button" class="btn btn-primary btn-med" data-toggle="modal" data-target="#save_changes_modal">
         Share Your Work
     </button>
-</td>
-<td colspan="2" style="padding-top:20px;">
+    </td>
+    <td colspan="1" style="padding-top: 20px;">
     <a href="{% url 'job-statistics' object.id %}">
-    <button type="button" class="btn btn-primary btn-lg">
+    <button type="button" class="btn btn-primary btn-med">
         View Job Statistics
     </button> </a>
-    <a href="{{ object.get_export_url }}" <button type="button" class="btn btn-default btn-lg" > Export Job </button> </a>
-</td></tr>
+    </td>
+    {% settings_value "IMAGE_TRACKING" as image_tracking %}
+    {% if image_tracking %}
+    <td colspan="1" style="padding-top: 20px;">
+        <a href="{% url 'job-report' object.id %}" class="btn btn-primary btn-med">
+            Reports
+        </a>
+    </td>
+    {% endif %}
+</tr>
 
 <!-- Added by Jared -->
 <div id="save_changes_modal" class="modal hide fade">
